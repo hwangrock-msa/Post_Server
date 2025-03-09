@@ -1,4 +1,4 @@
-package post;
+package com.example.postserver.post.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,10 +22,10 @@ public class PostEntity {
     private String content;
 
     @Column(nullable=false)
-    private long view;
+    private long viewCount;
 
     @Column(nullable=false)
-    private long like;
+    private long likeCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
