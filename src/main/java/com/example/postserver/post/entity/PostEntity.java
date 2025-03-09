@@ -2,7 +2,7 @@ package com.example.postserver.post.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import com.example.postserver.user.UserEntity;
+import com.example.postserver.user.entity.UserEntity;
 
 @Getter
 @Setter

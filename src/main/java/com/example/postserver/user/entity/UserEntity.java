@@ -1,4 +1,4 @@
-package com.example.postserver.user;
+package com.example.postserver.user.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
