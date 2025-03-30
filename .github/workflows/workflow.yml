@@ -13,7 +13,7 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
-    env: # 깃허브 환경변수
+    env:
       DB_URL: ${{ secrets.DB_URL }}
       DB_USERNAME: ${{ secrets.DB_USERNAME }}
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
@@ -45,4 +45,22 @@ jobs:
         with:
           context: .
           push: ${{ github.ref_name == 'deploy' }}
-          tags: hwangrock/msa-post:latest, hwangrock/msa-post:${{ github.sha }} # 도커 레포 이름
+          tags: hwangrock/msa-post:latest, hwangrock/msa-post:${{ github.sha }}
+
+      - name: Deploy to EC2 (only on deploy branch)
+        if: github.ref_name == 'deploy'
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker pull hwangrock/msa-post:latest
+            docker stop msa-post || true
+            docker rm msa-post || true
+            docker run -d --name msa-post \
+              -e DB_URL=${{ secrets.DB_URL }} \
+              -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
+              -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+              -p 8080:8080 \
+              hwangrock/msa-post:latest
