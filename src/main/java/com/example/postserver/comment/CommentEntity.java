@@ -1,10 +1,10 @@
-package comment;
+package com.example.postserver.comment;
 
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
-import com.example.postserver.user.UserEntity;
-import post.PostEntity;
+import com.example.postserver.user.entity.UserEntity;
+import com.example.postserver.post.entity.PostEntity;
 import java.time.LocalDateTime;
 
 @Getter
